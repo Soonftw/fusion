@@ -1,0 +1,19 @@
+Create functionality for search bar
+    User writes search term (common name, scientific name, habitat etc.)
+    If database finds items
+        save name, image and id in database
+        list plants
+        if user press plant
+            send to component for plant with specific ID
+        else
+            error handle
+    else
+        error handle
+
+
+Create model to store earlier searches
+Create notifier/observer pattern
+Create controller/view model that shows/hides views
+
+
+Comment

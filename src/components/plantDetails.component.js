@@ -1,64 +1,90 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import FadeIn from "react-fade-in";
+import Lottie from "react-lottie";
+import ReactLoading from "react-loading";
+import "bootstrap/dist/css/bootstrap.css";
+import * as loadImage from "../loading.json";
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: loadImage.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+};
 
 export default class PlantDetails extends Component {
-    constructor (props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.trefleToken = "QXBCaXgzaWtqK3JyRVFaMHBJSnJVUT09"; //Move to environment variables
-      this.getgrowth = this.getGrowth.bind(this);
+    this.trefleToken = "QXBCaXgzaWtqK3JyRVFaMHBJSnJVUT09"; //Move to environment variables
+    this.getgrowth = this.getGrowth.bind(this);
 
-      this.state = {
-        common_name: "",
-        family: "",
-        scientific_name: "",
-        id: 0,
-        image: "",
-        data: []
-      };
-    }
-    componentDidMount() {
-      axios.get('https://cors-anywhere.herokuapp.com/http://trefle.io/api/plants/'+this.props.match.params.id+'?token='+this.trefleToken)
-          .then(response => {
-          this.setState({
-            common_name: response.data.common_name,
-            family: response.data.family_common_name,
-            scientific_name: response.data.scientific_name,
-            id: response.data.id,
-            image: response.data.images[0].url,            
-            data: response.data.main_species.growth
-          })   
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-
-    }
-
-    getGrowth(){
-      console.log(this.state.common_name);
-      console.log(this.state.family);
-      console.log(this.state.scientific_name);
-      console.log(this.state.id);
-      console.log(this.state.image);
-      console.log(Object.keys(this.state.data));
-
-
-      return Object.keys(this.state.data).map(key => {
-        return <td>{JSON.stringify(this.state.data[key])}</td>;
-        
+    this.state = {
+      done: undefined,
+      common_name: "",
+      family: "",
+      scientific_name: "",
+      id: 0,
+      image: "",
+      data: []
+    };
+  }
+  componentDidMount() {
+    axios
+      .get(
+        "https://cors-anywhere.herokuapp.com/http://trefle.io/api/plants/" +
+          this.props.match.params.id +
+          "?token=" +
+          this.trefleToken
+      )
+      .then(response => {
+        this.setState({
+          done: true,
+          common_name: response.data.common_name,
+          family: response.data.family_common_name,
+          scientific_name: response.data.scientific_name,
+          id: response.data.id,
+          image: response.data.images[0].url,
+          data: response.data.main_species.growth
+        });
       })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
-      // return this.state.data.map(current_attribute => {
-      //   return <h1>tjosan</h1>;
-      // })
-    }
+  getGrowth() {
+    console.log(this.state.common_name);
+    console.log(this.state.family);
+    console.log(this.state.scientific_name);
+    console.log(this.state.id);
+    console.log(this.state.image);
+    console.log(Object.keys(this.state.data));
 
-    
-    render() {
-        return (
+    return Object.keys(this.state.data).map(key => {
+      return <td>{JSON.stringify(this.state.data[key])}</td>;
+    });
+
+    // return this.state.data.map(current_attribute => {
+    //   return <h1>tjosan</h1>;
+    // })
+  }
+
+  render() {
+    return (
+      <div>
+        {!this.state.done ? (
+          <FadeIn>
+            <div class="d-flex justify-content-center align-items-center">
+              <h1>Loading the little flower ofc</h1>
+              <Lottie options={defaultOptions} height={120} width={120} />
+            </div>
+          </FadeIn>
+        ) : (
           <div>
             <div>
               <h3>Plant Details</h3>
@@ -74,22 +100,22 @@ export default class PlantDetails extends Component {
                 </thead>
                 <tbody>
                   <tr>
-
-                  <td>{this.state.common_name}</td>
-                  <td>{this.state.family}</td>
-                  <td>{this.state.scientific_name}</td>
-                  <td>{this.state.id}</td>
-                  <td><img src={this.state.image} height='260' width='260' /></td>
-              
+                    <td>{this.state.common_name}</td>
+                    <td>{this.state.family}</td>
+                    <td>{this.state.scientific_name}</td>
+                    <td>{this.state.id}</td>
+                    <td>
+                      <img src={this.state.image} height="260" width="260" />
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <div>
-            <h3>Growth Details</h3>
-            <table className="table">
-              <thead className="thead-light">
+              <h3>Growth Details</h3>
+              <table className="table">
+                <thead className="thead-light">
                   <tr>
                     <th>Temperature mininum</th>
                     <th>Shade tolerance</th>
@@ -112,18 +138,16 @@ export default class PlantDetails extends Component {
                     <th>caco_3_tolerance</th>
                     <th>anaerobic_tolerance</th>
                   </tr>
-              </thead>
-              <tbody>
-                {this.getGrowth()}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>{this.getGrowth()}</tbody>
+              </table>
             </div>
           </div>
-        )
-    }
-
+        )}
+      </div>
+    );
+  }
 }
-
 
 // temperature_minimum: 0,
 //         shade_tolerance: 0,

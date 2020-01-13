@@ -16,4 +16,8 @@ Create notifier/observer pattern
 Create controller/view model that shows/hides views
 
 
+
+Create custom database of plants
+
+
 Comment

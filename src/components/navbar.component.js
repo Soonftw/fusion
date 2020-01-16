@@ -12,7 +12,12 @@ export default class Navbar extends Component {
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
               <Link to="/plants" className="nav-link">
-                Plants
+                Plant database
+              </Link>
+            </li>
+            <li className="navbar-item">
+              <Link to="/plantDB" className="nav-link">
+                My baskets
               </Link>
             </li>
           </ul>

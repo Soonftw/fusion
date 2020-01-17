@@ -6,6 +6,9 @@ import Navbar from "./components/navbar.component";
 import PlantList from "./components/plantList.component";
 import PlantDetails from "./components/plantDetails.component";
 import PlantDB from "./components/plantDB.component";
+import Search from "./components/search.component";
+import TrefleBrowser from "./components/trefleBrowser.component";
+require("dotenv").config();
 
 function App() {
   return (
@@ -15,7 +18,7 @@ function App() {
       <Router>
         <div className="container">
           <Navbar />
-          {/* <Route path="/" exact component={home} /> */}
+          <Route path="/" exact component={TrefleBrowser} />
           <Route path="/plants" exact component={PlantList} />
           <Route path="/plantDB/" exact component={PlantDB} />
           <Route path="/plantdetails/:id" component={PlantDetails} />

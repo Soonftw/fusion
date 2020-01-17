@@ -104,6 +104,7 @@ export default class PlantDetails extends Component {
                     <td>{this.state.family}</td>
                     <td>{this.state.scientific_name}</td>
                     <td>{this.state.id}</td>
+                    <button>Add to collection</button>
                     <td>
                       <img src={this.state.image} height="260" width="260" />
                     </td>

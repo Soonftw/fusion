@@ -1,19 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 
-const TREFLE_TOKEN = process.env.REACT_APP_TREFLE_TOKEN;
-const API_URL =
-  "https://cors-anywhere.herokuapp.com/http://trefle.io/api/plants/";
-
-class Search extends Component {
-  state = {
-    query: "",
-    results: []
-  };
-
-  componentDidMount() {
-    console.log(this.props.onSubmit);
-  }
+export default class Search extends Component {
+  //Child of trefleBrowser and collectionBrowser
+  //Props = placeholder and function that handles submit
+  //TODO fix search suggestions
 
   render() {
     return (
@@ -32,5 +22,3 @@ class Search extends Component {
     );
   }
 }
-
-export default Search;

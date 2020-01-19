@@ -125,7 +125,7 @@ export default class PlantDetails extends Component {
         Swal.fire({
           icon: "error",
           title: "Not nice :(",
-          text: "Something went wrong..."
+          text: error.response.data
         });
         console.log(error);
       });
